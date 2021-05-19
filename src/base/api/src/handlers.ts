@@ -1,6 +1,5 @@
-import { User } from '.prisma/client';
 import { Request, Response } from 'express';
-import { findUser, findUsers, findUserByEmail, createUser, deleteUser } from './../../../components/user/src/interface';
+import { findUser, findUsers, findUserByEmail, createUser, deleteUser, User } from './../../../components/user/src/interface';
 import * as Changeset from './../../../components/changeset/src/interface';
 import { validate_exclusion, validate_format, validate_required } from '../../../components/changeset/src/interface';
 import { pipe } from 'fp-ts/lib/function';

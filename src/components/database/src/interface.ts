@@ -1,7 +1,7 @@
-import { getClient as getClientCore } from './core';
+import * as Core from './core';
 
 const client = () => {
-    return getClientCore();
+    return Core.getClient();
 }
 
 export { client }

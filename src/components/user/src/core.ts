@@ -1,13 +1,12 @@
-import { changeset } from '../../changeset/src/interface';
 import { User } from '../resources/user.interface';
-import { client } from './../../database/src/interface';
+import * as Database from './../../database/src/interface';
 
 /**
  * Find all users
  * @returns array of users
  */
 const findAllUsers = (): Promise<User[]> => {
-    return client().user.findMany();
+    return Database.client().user.findMany();
 }
 
 /**
@@ -16,7 +15,7 @@ const findAllUsers = (): Promise<User[]> => {
  * @returns user or null
  */
 const findUserById = ( id: number ): Promise<User|null> => {
-    return client().user.findUnique({
+    return Database.client().user.findUnique({
         where: { id: id }
     });
 }
@@ -27,7 +26,7 @@ const findUserById = ( id: number ): Promise<User|null> => {
  * @returns user or null
  */
 const findUserByEmail = ( email: string ): Promise<User|null> => {
-    return client().user.findUnique({
+    return Database.client().user.findUnique({
         where: { email: email }
     });
 }
@@ -39,7 +38,7 @@ const findUserByEmail = ( email: string ): Promise<User|null> => {
  */
 const createOneUser = ( user: User ): Promise<User>|null => {
     // create
-    return client().user.create({ 
+    return Database.client().user.create({ 
         'data': {
             'name': user.name,
             'email': user.email
@@ -53,9 +52,17 @@ const createOneUser = ( user: User ): Promise<User>|null => {
  * @returns the deleted user
  */
 const deleteUserById = ( id: number ): Promise<User> => {
-    return client().user.delete({
+    return Database.client().user.delete({
         where: { id: id }
     });
 }
 
-export { findAllUsers, findUserById, findUserByEmail, createOneUser, deleteUserById }
+
+export { 
+    // functions
+    findAllUsers, 
+    findUserById, 
+    findUserByEmail, 
+    createOneUser,
+    deleteUserById 
+}

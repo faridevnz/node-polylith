@@ -1,4 +1,5 @@
 import express, { Request, Response } from 'express';
+import * as Log from '../../../components/logger/src/core';
 import * as Handlers from './handlers';
 const pino = require('pino-http')();
 
@@ -8,6 +9,11 @@ const app = express();
 // MIDDLEWARES
 app.use(express.json());
 app.use(pino);
+
+app.use((req, res, next) => {
+    Log.log('LOG test');
+    next();
+});
 
 // ROUTES
 // users

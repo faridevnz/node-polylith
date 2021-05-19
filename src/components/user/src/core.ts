@@ -1,6 +1,6 @@
+import { changeset } from '../../changeset/src/interface';
 import { User } from '../resources/user.interface';
 import { client } from './../../database/src/interface';
-import { validate } from './validators';
 
 /**
  * Find all users
@@ -13,11 +13,22 @@ const findAllUsers = (): Promise<User[]> => {
 /**
  * Find one user by id
  * @param id of user to find
- * @returns user
+ * @returns user or null
  */
 const findUserById = ( id: number ): Promise<User|null> => {
     return client().user.findUnique({
         where: { id: id }
+    });
+}
+
+/**
+ * Find one user by email
+ * @param email of user to find
+ * @returns user or null
+ */
+const findUserByEmail = ( email: string ): Promise<User|null> => {
+    return client().user.findUnique({
+        where: { email: email }
     });
 }
 
@@ -27,8 +38,6 @@ const findUserById = ( id: number ): Promise<User|null> => {
  * @returns the stored user
  */
 const createOneUser = ( user: User ): Promise<User>|null => {
-    // validate user
-    if ( !validate(user) ) return null;
     // create
     return client().user.create({ 
         'data': {
@@ -49,4 +58,4 @@ const deleteUserById = ( id: number ): Promise<User> => {
     });
 }
 
-export { findAllUsers, findUserById, createOneUser, deleteUserById }
+export { findAllUsers, findUserById, findUserByEmail, createOneUser, deleteUserById }

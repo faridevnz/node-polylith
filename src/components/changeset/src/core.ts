@@ -1,0 +1,75 @@
+
+interface StringKeysObject { [key: string]: unknown };
+interface Changeset<T> {
+    valid: boolean,
+    data: T
+}
+
+
+/**
+ * Function that take an object and map this object from the given scheme
+ * @param data - the object to map
+ * @param params - the scheme that define the result structure
+ * @return the mapped object
+ */
+const changeset = <T extends StringKeysObject>( data: StringKeysObject, scheme: string[] ): Changeset<T> => {
+    let object: StringKeysObject = {};
+    scheme.forEach((key: string) => {
+        object[key] = data[key];
+    });
+    return { valid: true, data: object as T}
+}
+
+
+// VALIDATOR FUNCTIONS
+
+/**
+ * Validate if corresponding value og 'key' is included in given Set
+ * @param key - key to take the value
+ * @param set - to verify the inclusion
+ * @returns the validated changeset
+ */
+const validate_inclusion = <T extends StringKeysObject>( key: string, set: Set<unknown> ) => ( changeset: Changeset<T> ): Changeset<T> => {
+    const outcome: boolean = set.has(changeset.data[key]);
+    return { ...changeset, valid: changeset.valid && outcome }
+}
+
+/**
+ * Validate if the values in key_list are included in the changeset
+ * @param key_list - list of required keys
+ * @returns the validated changeset
+ */
+const validate_required = <T extends StringKeysObject>( key_list: string[] ) => ( changeset: Changeset<T> ): Changeset<T> => {
+    let outcome: boolean = true;
+    // check if all keys exists
+    key_list.forEach((key: string) =>  outcome &&= !!changeset.data[key]);
+    return { ...changeset, valid: changeset.valid && outcome } ;
+}
+
+/**
+ * Validate if the values in key_list are not included in the changeset
+ * @param key_list - list of not required keys
+ * @returns the validated changeset
+ */
+const validate_exclusion = <T extends StringKeysObject>( key_list: string[] ) => ( changeset: Changeset<T> ): Changeset<T> => {
+    let outcome: boolean = true;
+    // check id all keys not exists
+    key_list.forEach((key: string) => outcome &&= !changeset.data[key]);
+    return { ...changeset, valid: changeset.valid && outcome };
+}
+
+/**
+ * 
+ * @param tuple_list 
+ * @returns 
+ */
+interface Item { key: string, pattern: RegExp }
+const validate_format = <T extends StringKeysObject>( tuple_list: Item[] ) => ( changeset: Changeset<T> ): Changeset<T> => {
+    let outcome = true;
+    tuple_list.forEach((item: Item) => {
+        outcome &&= new RegExp(item.pattern).test( String(changeset.data[item.key]) );
+    });
+    return { ...changeset, valid: changeset.valid && outcome };
+}
+
+export { StringKeysObject, Changeset, changeset, validate_inclusion, validate_required, validate_exclusion, validate_format }

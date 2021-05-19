@@ -19,14 +19,15 @@ const changeset = <T extends StringKeysObject>( data: StringKeysObject, scheme: 
     let object: StringKeysObject = {};
     scheme.forEach((key: string) => {
         const splitted_key: string[] = key.split(':');
-        let obj_path: string = '';
-        let latest_path: string = '';
+        let objectPath = '';
         splitted_key.forEach((key: string) => {
-            obj_path += `['${key}']`;
-            latest_path = `['${key}']`;
+            // create the new key with empty object
+            object[key] = {};
+            // concat the object path
+            objectPath += `['${key}']`;
         });
-        console.log("EVAL: ", `object${latest_path} = data${obj_path}`);
-        eval(`object${latest_path} = data${obj_path}`);
+        // assignement
+        eval(`object${objectPath} = data${objectPath}`);
     });
     return { valid: true, data: object as T }
 }

@@ -1,5 +1,5 @@
 import express, { Request, Response } from 'express';
-import * as Log from '../../../components/logger/src/core';
+import * as Log from '../../../components/logger/src/interfaces';
 import * as Handlers from './handlers';
 const pino = require('pino-http')();
 

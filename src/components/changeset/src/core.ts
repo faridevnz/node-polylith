@@ -1,13 +1,4 @@
-
-// types
-
-type ChangesetCallback<T> = (c: Changeset<T> ) => Changeset<T>;
-interface StringKeysObject { [key: string]: unknown };
-interface Changeset<T> {
-    valid: boolean,
-    data: T
-}
-
+import { Changeset, StringKeysObject, ChangesetCallback } from './../resources/changeset.interface';
 
 /**
  * Function that take an object and map this object from the given scheme

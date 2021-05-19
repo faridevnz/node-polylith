@@ -1,7 +1,14 @@
 import { PrismaClient } from '@prisma/client';
 
-const getClient = () => {
-    return new PrismaClient();
-}
 
-export { getClient }
+/**
+ * Function that return the prisma client
+ * @returns 
+ */
+const getClient = (): PrismaClient => new PrismaClient();
+
+
+export { 
+    // functions
+    getClient 
+}

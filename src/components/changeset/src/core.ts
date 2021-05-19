@@ -18,7 +18,15 @@ interface Changeset<T> {
 const changeset = <T extends StringKeysObject>( data: StringKeysObject, scheme: string[] ): Changeset<T> => {
     let object: StringKeysObject = {};
     scheme.forEach((key: string) => {
-        object[key] = data[key];
+        const splitted_key: string[] = key.split(':');
+        let obj_path: string = '';
+        let latest_path: string = '';
+        splitted_key.forEach((key: string) => {
+            obj_path += `['${key}']`;
+            latest_path = `['${key}']`;
+        });
+        console.log("EVAL: ", `object${latest_path} = data${obj_path}`);
+        eval(`object${latest_path} = data${obj_path}`);
     });
     return { valid: true, data: object as T }
 }

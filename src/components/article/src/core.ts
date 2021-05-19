@@ -9,7 +9,8 @@ import * as Database from './../../database/src/interface';
  */
 const findArticleById = (id: number): Promise<Article|null> => {
     return Database.client().article.findUnique({
-        where: { id: id }
+        where: { id: id },
+        include: { user: true }
     });
 }
 
@@ -20,7 +21,8 @@ const findArticleById = (id: number): Promise<Article|null> => {
  */
 const findArticleByName = (name: string): Promise<Article|null> => {
     return Database.client().article.findUnique({
-        where: { name: name }
+        where: { name: name },
+        include: { user: true }
     });
 }
 
@@ -29,7 +31,9 @@ const findArticleByName = (name: string): Promise<Article|null> => {
  * @returns array of Articles
  */
 const findAllArticles = (): Promise<Article[]> => {
-    return Database.client().article.findMany();
+    return Database.client().article.findMany({
+        include: { user: true }
+    });
 }
 
 /**
@@ -41,7 +45,12 @@ const createArticle = (article: Article): Promise<Article> => {
     return Database.client().article.create({
         data: {
             name: article.name,
-            price: article.price
+            price: article.price,
+            user: {
+                connect: {
+                    id: article.userId
+                }
+            }
         }
     });
 }

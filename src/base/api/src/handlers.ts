@@ -72,13 +72,14 @@ const findAllArticlesHandler = async (req: Request, res: Response) => {
 
 const createArticleHandler = async (req: Request, res: Response) => {
     const body: { [key: string]: unknown } = req.body;
+    const user: User = (await findUsers())[0];
     // changeset creation and validation
-    let articleChangeset: Changeset.Changeset<Article> = Changeset.changeset<Article>(body, ['name', 'price']);
+    let articleChangeset: Changeset.Changeset<Article> = Changeset.changeset<Article>({ ...body, userId: user.id  }, ['name', 'price', 'userId']);
     let chs = pipe(
         articleChangeset,
-        validate_required(['name', 'price']),
+        validate_required(['name', 'price', 'userId']),
         validate_exclusion(['id'])
-        );
+    );
     if ( !chs.valid ) return res.status(400).send({ message: 'Bad Request' });
     // check if exists an Article with the same name
     const db_article: Article|null = await findArticleByName(chs.data.name);

@@ -14,13 +14,16 @@ generator client {
 // scheme
 
 model User {
-  id      Int      @id @default(autoincrement())
-  name    String?  @db.VarChar(255)
-  email   String   @unique @db.VarChar(255)
+  id        Int      @id @default(autoincrement())
+  name      String?  @db.VarChar(255)
+  email     String   @unique @db.VarChar(255)
+  articles  Article[]
 }
 
 model Article {
-  id  Int       @id @default(autoincrement())
-  name String   @unique @db.VarChar(255)
-  price Float
+  id      Int       @id @default(autoincrement())
+  name    String    @unique @db.VarChar(255)
+  price   Float
+  userId  Int
+  user    User      @relation(fields: [userId], references: [id])
 }

@@ -1,10 +1,13 @@
 import express, { Request, Response } from 'express';
 import * as Handlers from './handlers';
+const pino = require('pino-http')();
 
 // create application
 const app = express();
-// middlewares
+
+// MIDDLEWARES
 app.use(express.json());
+app.use(pino);
 
 // ROUTES
 // users

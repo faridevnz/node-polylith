@@ -8,6 +8,7 @@ const findUserByEmail = (email: string): Promise<User|null> =>  Core.findUserByE
 const createUser = (user: any): Promise<User>|null => Core.createOneUser(user);
 const deleteUser = (id: number): Promise<User> => Core.deleteUserById(id);
 
+
 export { 
     // types
     User,

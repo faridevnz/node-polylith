@@ -2,9 +2,9 @@ import { Request, Response } from 'express';
 import { findUser, findUsers, findUserByEmail, createUser, deleteUser, User } from './../../../components/user/src/interface';
 import { createArticle, findAllArticles, findArticleByName, findArticleById, deleteArticle } from './../../../components/article/src/interface';
 import * as Changeset from './../../../components/changeset/src/interface';
-import { validate_exclusion, validate_format, validate_required } from '../../../components/changeset/src/interface';
-import { pipe } from 'fp-ts/lib/function';
 import { Article } from '../../../components/article/resources/article.interface';
+import { user_changeset } from '../../../components/user/src/scheme';
+import { article_changeset } from '../../../components/article/src/scheme';
 
 // USER HANDLERS
 
@@ -25,18 +25,9 @@ const findUserByIdHandler = async (req: Request, res: Response) => {
 const createUserHandler = async (req: Request, res: Response) => {
     const body: {[key: string]: unknown} = req.body;
     // create and validate the changeset
-    const userChangeset = Changeset.changeset<User>(body, ['email', 'name', 'id']); 
-    let chs: Changeset.Changeset<User> = pipe(
-        userChangeset,
-        validate_required<User>(['email']),
-        validate_format<User>([
-            { key: 'email', pattern: /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/ }, 
-            { key: 'name', pattern: /^[A-Z]/ }
-        ]),
-        validate_exclusion<User>(['id'])
-    );
+    const userChangeset: Changeset.Changeset<User> = user_changeset(body);
     // check if user is valid
-    if ( !chs.valid ) return res.status(404).send({ message: 'Bad Request' });
+    if ( !userChangeset.valid ) return res.status(404).send({ message: 'Bad Request' });
     // check if email altready exists
     const dbUser: User|null = await findUserByEmail( String(userChangeset.data.email) );
     if ( !!dbUser ) return res.status(409).send({ message: 'Conflict' });
@@ -74,18 +65,13 @@ const createArticleHandler = async (req: Request, res: Response) => {
     const body: { [key: string]: unknown } = req.body;
     const user: User = (await findUsers())[0];
     // changeset creation and validation
-    let articleChangeset: Changeset.Changeset<Article> = Changeset.changeset<Article>({ ...body, userId: user.id  }, ['name', 'price', 'userId']);
-    let chs = pipe(
-        articleChangeset,
-        validate_required(['name', 'price', 'userId']),
-        validate_exclusion(['id'])
-    );
-    if ( !chs.valid ) return res.status(400).send({ message: 'Bad Request' });
+    let articleChangeset: Changeset.Changeset<Article> = article_changeset({ ...body, userId: user.id  });
+    if ( !articleChangeset.valid ) return res.status(400).send({ message: 'Bad Request' });
     // check if exists an Article with the same name
-    const db_article: Article|null = await findArticleByName(chs.data.name);
+    const db_article: Article|null = await findArticleByName(articleChangeset.data.name);
     if ( !!db_article ) return res.status(409).send({ message: 'Conflict' });
     // create Article
-    const created_article = await createArticle(chs.data);
+    const created_article = await createArticle(articleChangeset.data);
     res.send({ ...created_article });
 }
 

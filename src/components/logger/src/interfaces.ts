@@ -1,5 +1,12 @@
 import * as Core from './core';
 
-const log = (message: unknown): void => Core.log(message);
 
-export { log }
+const info = (message: unknown): void => Core.info(message);
+const express = (): any => Core.express();
+
+
+export { 
+    // functions
+    info,
+    express
+}

@@ -1,0 +1,78 @@
+[1621497825934] [32mINFO[39m (74409 on MacBook-Pro-di-Aesys.local): [36mrequest completed[39m
+    res: {
+      "statusCode": 200,
+      "headers": {
+        "x-powered-by": "Express",
+        "content-type": "application/json; charset=utf-8",
+        "content-length": "255",
+        "etag": "W/\"ff-MhkQcXDjYtdPu9VbaMyolEo/t+Q\""
+      }
+    }
+    responseTime: 117
+    req: {
+      "id": 1,
+      "method": "GET",
+      "url": "/articles",
+      "headers": {
+        "host": "localhost:3000",
+        "user-agent": "insomnia/2021.3.0",
+        "cookie": "connect.sid=s%3AEVDRNow7B0T4PLBSipGVmZx8Kg9Aof7k.TFMNrkaB9VOzVDNPpW7Rj8r2Z9sb5rOQRNdERUeWQF4",
+        "content-type": "application/json",
+        "accept": "*/*",
+        "content-length": "61"
+      },
+      "remoteAddress": "::ffff:127.0.0.1",
+      "remotePort": 54726
+    }
+[1621497826465] [32mINFO[39m (74409 on MacBook-Pro-di-Aesys.local): [36mrequest completed[39m
+    res: {
+      "statusCode": 200,
+      "headers": {
+        "x-powered-by": "Express",
+        "content-type": "application/json; charset=utf-8",
+        "content-length": "255",
+        "etag": "W/\"ff-MhkQcXDjYtdPu9VbaMyolEo/t+Q\""
+      }
+    }
+    responseTime: 69
+    req: {
+      "id": 2,
+      "method": "GET",
+      "url": "/articles",
+      "headers": {
+        "host": "localhost:3000",
+        "user-agent": "insomnia/2021.3.0",
+        "cookie": "connect.sid=s%3AEVDRNow7B0T4PLBSipGVmZx8Kg9Aof7k.TFMNrkaB9VOzVDNPpW7Rj8r2Z9sb5rOQRNdERUeWQF4",
+        "content-type": "application/json",
+        "accept": "*/*",
+        "content-length": "61"
+      },
+      "remoteAddress": "::ffff:127.0.0.1",
+      "remotePort": 54726
+    }
+[1621497826929] [32mINFO[39m (74409 on MacBook-Pro-di-Aesys.local): [36mrequest completed[39m
+    res: {
+      "statusCode": 200,
+      "headers": {
+        "x-powered-by": "Express",
+        "content-type": "application/json; charset=utf-8",
+        "content-length": "255",
+        "etag": "W/\"ff-MhkQcXDjYtdPu9VbaMyolEo/t+Q\""
+      }
+    }
+    responseTime: 66
+    req: {
+      "id": 3,
+      "method": "GET",
+      "url": "/articles",
+      "headers": {
+        "host": "localhost:3000",
+        "user-agent": "insomnia/2021.3.0",
+        "cookie": "connect.sid=s%3AEVDRNow7B0T4PLBSipGVmZx8Kg9Aof7k.TFMNrkaB9VOzVDNPpW7Rj8r2Z9sb5rOQRNdERUeWQF4",
+        "content-type": "application/json",
+        "accept": "*/*",
+        "content-length": "61"
+      },
+      "remoteAddress": "::ffff:127.0.0.1",
+      "remotePort": 54726
+    }
